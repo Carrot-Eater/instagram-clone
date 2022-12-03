@@ -1,9 +1,11 @@
 import 'package:flutter_instagram_clone/src/controller/bottom_nav_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_clone/src/components/image_data.dart';
+import 'package:flutter_instagram_clone/src/pages/mypage.dart';
 import 'package:get/get.dart';
 import 'package:flutter_instagram_clone/src/pages/home.dart';
 import 'package:flutter_instagram_clone/src/pages/search.dart';
+import 'package:flutter_instagram_clone/src/pages/active_history.dart';
 
 class App extends GetView<BottomNavController> {
   const App({Key? key}) : super(key: key);
@@ -25,16 +27,9 @@ class App extends GetView<BottomNavController> {
                     );
                   },
                 ),
-                const Search(),
-                Container(
-                  child: Center(child: Text('UPLOAD')),
-                ),
-                Container(
-                  child: Center(child: Text('ACTIVITY')),
-                ),
-                Container(
-                  child: Center(child: Text('MYPAGE')),
-                ),
+                Container(),
+                const ActiveHistory(),
+                const Mypage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -53,16 +48,16 @@ class App extends GetView<BottomNavController> {
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.searchOff),
                   activeIcon: ImageData(IconsPath.searchOn),
-                  label: 'home',
+                  label: 'search',
                 ),
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.uploadIcon),
-                  label: 'home',
+                  label: 'upload',
                 ),
                 BottomNavigationBarItem(
                   icon: ImageData(IconsPath.activeOff),
                   activeIcon: ImageData(IconsPath.activeOn),
-                  label: 'home',
+                  label: 'heart',
                 ),
                 BottomNavigationBarItem(
                   icon: Container(

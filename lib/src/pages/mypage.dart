@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_clone/src/components/avatar_widget.dart';
 import 'package:flutter_instagram_clone/src/components/image_data.dart';
-
 import '../components/user_card.dart';
 
 class Mypage extends StatefulWidget {

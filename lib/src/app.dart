@@ -29,7 +29,7 @@ class App extends GetView<BottomNavController> {
                 ),
                 Container(),
                 const ActiveHistory(),
-                const Mypage(),
+                const MyPage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(

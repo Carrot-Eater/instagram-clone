@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_instagram_clone/src/components/avatar_widget.dart';
 import 'package:flutter_instagram_clone/src/components/image_data.dart';
+import 'package:flutter_instagram_clone/src/controller/mypage_controller.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../components/user_card.dart';
+import '../controller/auth_controller.dart';
 
-class Mypage extends StatefulWidget {
-  const Mypage({super.key});
-
-  @override
-  State<Mypage> createState() => _MypageState();
-}
-
-class _MypageState extends State<Mypage> with TickerProviderStateMixin {
-  late TabController tabController;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    tabController = TabController(length: 2, vsync: this);
-  }
+class MyPage extends GetView<MypageController> {
+  const MyPage({Key? key}) : super(key: key);
 
   Widget _statisticsOne(String title, int value) {
     return Column(
@@ -41,49 +32,50 @@ class _MypageState extends State<Mypage> with TickerProviderStateMixin {
   Widget _information() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              AvatarWidget(
-                type: AvatarType.TYPE3,
-                thumbPath:
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png',
-                size: 80,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: _statisticsOne('Posts', 15),
-                    ),
-                    Expanded(
-                      child: _statisticsOne('Followers', 15),
-                    ),
-                    Expanded(
-                      child: _statisticsOne('Followings', 15),
-                    ),
-                  ],
+      child: Obx(
+        () => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                AvatarWidget(
+                  type: AvatarType.TYPE3,
+                  thumbPath: controller.targetUser.value.thumbnail!,
+                  size: 80,
                 ),
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            '안녕하세요 당근을 마구마구 꾸역꾸역 먹는 중인 당근 먹자 입니다',
-            style: TextStyle(
-              fontSize: 13,
-              color: Colors.black,
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: _statisticsOne('Posts', 15),
+                      ),
+                      Expanded(
+                        child: _statisticsOne('Followers', 15),
+                      ),
+                      Expanded(
+                        child: _statisticsOne('Followings', 15),
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          )
-        ],
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              controller.targetUser.value.description!,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.black,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -170,7 +162,7 @@ class _MypageState extends State<Mypage> with TickerProviderStateMixin {
 
   Widget _tabMenu() {
     return TabBar(
-      controller: tabController,
+      controller: controller.tabController,
       indicatorColor: Colors.black,
       indicatorWeight: 1,
       tabs: [
@@ -211,12 +203,14 @@ class _MypageState extends State<Mypage> with TickerProviderStateMixin {
       backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        title: const Text(
-          '당근먹자',
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Colors.black,
+        title: Obx(
+          () => Text(
+            controller.targetUser.value.nickname!,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black,
+            ),
           ),
         ),
         actions: [

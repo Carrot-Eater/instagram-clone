@@ -16,7 +16,7 @@ class AuthController extends GetxController {
     var userData = await UserRepository.loginUserByUid(uid);
     if (userData != null) {
       user(userData);
-      //InitBinding.additionalBinding();
+      InitBinding.additionalBinding();
     }
     return userData;
   }
@@ -32,8 +32,8 @@ class AuthController extends GetxController {
         if (event.bytesTransferred == event.totalBytes &&
             event.state == TaskState.success) {
           var downloadUrl = await event.ref.getDownloadURL();
-          //var updatedUserData = signupUser.copyWith(thumbnail: downloadUrl);
-          // _submitSignup(updatedUserData);
+          var updatedUserData = signupUser.copyWith(thumbnail: downloadUrl);
+          _submitSignup(updatedUserData);
         }
       });
     }
